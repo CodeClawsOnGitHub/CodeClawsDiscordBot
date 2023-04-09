@@ -37,7 +37,6 @@ public class MessageFilter
     
     bool SpamFilter()
     {
-        SocketGuildChannel channel = (SocketGuildChannel) _currentMessage.Channel;
         string messageContent = _currentMessage.Content;
         int messageLength = messageContent.Length;
         if (_messageCount.ContainsKey(_currentMessage.Author.Id))
@@ -47,7 +46,6 @@ public class MessageFilter
             {
                 if (messageCount.lastMessageTime.AddSeconds(2) > DateTime.Now)
                 {
-                    SocketGuildUser user = channel.Guild.GetUser(_currentMessage.Author.Id);
                     _messageCount.Remove(_currentMessage.Author.Id);
                     return true;
                 }
