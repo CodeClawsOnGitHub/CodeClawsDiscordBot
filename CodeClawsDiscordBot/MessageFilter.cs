@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using Discord;
 using Discord.WebSocket;
 
@@ -17,7 +19,25 @@ public class MessageFilter
     
     private Dictionary<ulong,MessageCount> _messageCount = new();
     IMessage _currentMessage = null;
+    private Dictionary<string, bool> _filterExceptions;
     
+    public MessageFilter()
+    {
+        _filterExceptions = new Dictionary<string, bool>();
+        // open medicalabb.csv and add to _filterExceptions
+        var files = Directory.GetFiles("data/capsfilterexceptions/" , "*.csv");
+        foreach (var file in files)
+        {
+            using (var fileStream = File.OpenRead(file))
+            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true, 1024)) {
+                while (streamReader.ReadLine() is { } line)
+                {
+                    if (_filterExceptions.ContainsKey(line) == false)
+                        _filterExceptions.Add(line, true);
+                }
+            }
+        }
+    }
     bool CharacterFilter()
     {   string messageContent = _currentMessage.Content;
         int count = 0;
@@ -71,13 +91,20 @@ public class MessageFilter
     
     bool CapsFilter()
     {
+        int count = 0;
         string messageContent = _currentMessage.Content;
         int messageLength = messageContent.Length;
-        int count = 0;
-        for (int i = 0; i < messageContent.Length; i++)
+        var messageWords = messageContent.Split(' ');
+        foreach (var word in messageWords)
         {
-            if (char.IsUpper(messageContent[i])) {
-                count++;
+            if (!_filterExceptions.ContainsKey(word))
+            {
+                foreach (var character in word)
+                {
+                    if (char.IsUpper(character)) {
+                        count++;
+                    }
+                }
             }
         }
 

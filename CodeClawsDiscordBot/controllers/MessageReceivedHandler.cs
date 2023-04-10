@@ -7,6 +7,7 @@ namespace CodeClawsDiscordBot.controllers;
 
 public class MessageReceivedHandler
 {
+    private static readonly MessageFilter MessageFilter = new();
     public static async Task MessageReceived(SocketMessage message)
     {
         if (message.Author.IsBot)
@@ -18,8 +19,8 @@ public class MessageReceivedHandler
         string messageContent = message.Content;
         int messageLength = messageContent.Length;
 
-        MessageFilter messageFilter = new MessageFilter();
-        FilterResult filterResult = messageFilter.FilterMessage(message);
+        
+        FilterResult filterResult = MessageFilter.FilterMessage(message);
         
         if (filterResult.IsFiltered)
         {
