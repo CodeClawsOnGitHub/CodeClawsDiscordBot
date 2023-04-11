@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using CodeClawsDiscordBot.commands;
 using Discord.WebSocket;
 
-namespace CodeClawsDiscordBot.commands;
+namespace CodeClawsDiscordBot.controllers;
 
 public class SlashCommandHandler
 {
@@ -13,6 +14,14 @@ public class SlashCommandHandler
         {
             case "ping":
                 await PingCommand.HandleCommand(command);
+                break;
+            case "codeclaws":
+                await CodeClawsCommands.HandleCommand(command);
+                break;
+            
+            default:
+                Console.Out.WriteLine("Unknown command!");
+                await command.RespondAsync($"{command.CommandName}");
                 break;
         }
     }

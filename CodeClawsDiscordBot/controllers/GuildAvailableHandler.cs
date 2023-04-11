@@ -17,6 +17,7 @@ public class GuildAvailableHandler
             // Now that we have our builder, we can call the CreateApplicationCommandAsync method to make our slash command.
             var pingCommand = PingCommand.GetCommand();
             await guild.CreateApplicationCommandAsync(pingCommand.Build());
+            await guild.CreateApplicationCommandAsync(CodeClawsCommands.GetCommand().Build());
         }
         catch(HttpException exception)
         {

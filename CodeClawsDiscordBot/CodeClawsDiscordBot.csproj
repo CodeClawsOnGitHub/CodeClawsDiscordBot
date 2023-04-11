@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="..\packages\LibGit2Sharp.NativeBinaries.2.0.306\build\net46\LibGit2Sharp.NativeBinaries.props" Condition="Exists('..\packages\LibGit2Sharp.NativeBinaries.2.0.306\build\net46\LibGit2Sharp.NativeBinaries.props')" />
     <Import Project="..\packages\xunit.core.2.4.2\build\xunit.core.props" Condition="Exists('..\packages\xunit.core.2.4.2\build\xunit.core.props')" />
     <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
     <PropertyGroup>
@@ -66,6 +67,9 @@
         <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
           <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
         </Reference>
+        <Reference Include="Octokit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=0be8860aee462442, processorArchitecture=MSIL">
+          <HintPath>..\packages\Octokit.5.0.3\lib\netstandard2.0\Octokit.dll</HintPath>
+        </Reference>
         <Reference Include="System" />
         <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
           <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -120,14 +124,20 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="CodeClawsBot.cs" />
+        <Compile Include="commands\CodeClawsCommands.cs" />
         <Compile Include="commands\ping.cs" />
+        <Compile Include="controllers\ButtonHandler.cs" />
         <Compile Include="controllers\GuildAvailableHandler.cs" />
         <Compile Include="controllers\MessageReceivedHandler.cs" />
+        <Compile Include="controllers\ModalSubmissionHandler.cs" />
         <Compile Include="controllers\OnReadyHandler.cs" />
+        <Compile Include="controllers\SelectMenuHandler.cs" />
         <Compile Include="controllers\SlashCommandHandler.cs" />
         <Compile Include="controllers\UserController.cs" />
         <Compile Include="dataaccessobjects\UserDAO.cs" />
+        <Compile Include="GitIntegration.cs" />
         <Compile Include="MessageFilter.cs" />
+        <Compile Include="modals\BotIssueModal.cs" />
         <Compile Include="models\PunishmentModel.cs" />
         <Compile Include="models\UserModel.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
@@ -151,6 +161,7 @@
       </PropertyGroup>
       <Error Condition="!Exists('..\packages\xunit.core.2.4.2\build\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.2\build\xunit.core.props'))" />
       <Error Condition="!Exists('..\packages\xunit.core.2.4.2\build\xunit.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\xunit.core.2.4.2\build\xunit.core.targets'))" />
+      <Error Condition="!Exists('..\packages\LibGit2Sharp.NativeBinaries.2.0.306\build\net46\LibGit2Sharp.NativeBinaries.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\LibGit2Sharp.NativeBinaries.2.0.306\build\net46\LibGit2Sharp.NativeBinaries.props'))" />
     </Target>
     <Import Project="..\packages\xunit.core.2.4.2\build\xunit.core.targets" Condition="Exists('..\packages\xunit.core.2.4.2\build\xunit.core.targets')" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

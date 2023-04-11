@@ -40,7 +40,10 @@ public class CodeClawsBot
         _client.SlashCommandExecuted += SlashCommandHandler.Handle;
         _client.MessageReceived += MessageReceivedHandler.MessageReceived;
         _client.GuildAvailable += GuildAvailableHandler.GuildAvailable;
-        
+        _client.ButtonExecuted += ButtonHandler.Handle;
+        _client.ModalSubmitted += ModalSubmissionHandler.Handle;
+        _client.SelectMenuExecuted += SelectMenuHandler.Handle;
+
         string token = Environment.GetEnvironmentVariable("BOT_TOKEN");
         
 

@@ -11,6 +11,7 @@ public class PingCommand
         var command = new SlashCommandBuilder();
         command.WithName("ping");
         command.WithDescription("Pong!");
+        command.DefaultMemberPermissions = GuildPermission.BanMembers;
         return command;
     }
     

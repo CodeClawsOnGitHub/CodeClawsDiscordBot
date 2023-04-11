@@ -12,5 +12,13 @@ public class OnReadyHandler
     {
         Console.Out.WriteLine("Client ready!");
         await Client.SetGameAsync("with code", null, ActivityType.Playing);
+        // var globalCommands = Client.GetGlobalApplicationCommandsAsync();
+        // foreach (var command in globalCommands.Result)
+        // {
+        //     if (command.Name == "first-global-command")
+        //     {
+        //         await command.DeleteAsync();
+        //     }
+        // }
     }
 }
